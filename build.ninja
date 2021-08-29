@@ -1,0 +1,13 @@
+flags = -g -gcodeview
+
+rule compile
+    command = clang $flags $libs $in -o $out
+
+build Injector.exe: compile Injector.cpp
+    libs = -lshlwapi
+
+build Hook.dll: compile Hook.cpp
+    libs = -luser32 -lgdi32
+    flags = $flags -shared
+
+default Injector.exe Hook.dll
